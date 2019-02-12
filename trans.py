@@ -14,10 +14,15 @@ client = commands.Bot(command_prefix=';;')
 @client.event
 async def on_ready():
     print("bot is ready")
-    account = Account('sourovafrin')
-    mana = account.get_manabar()
-    mana = round(mana["current_mana_pct"], 2)
-    await client.change_presence(game=discord.Game(name="Manabar: "+str(mana), type=3))
+    await testt()
+
+async def testt():
+    while(True):
+        account = Account('sourovafrin')
+        mana = account.get_manabar()
+        mana = round(mana["current_mana_pct"], 2)
+        await client.change_presence(game=discord.Game(name="Manabar: " + str(mana), type=3))
+        await asyncio.sleep(20)
 
 SR=os.environ.get('SR')
 SV=os.environ.get('SV')
