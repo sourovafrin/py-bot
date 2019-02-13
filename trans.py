@@ -99,20 +99,26 @@ async def on_command_error(error , ctx):
 async def transfer(ctx,amount,asset_name,to,memo="Sent using sourovafrin's discord py bot"):
     asset_name = asset_name.upper()
     if ctx.message.author.id=="397972596207124480":
-        await client.say("Type the username from which you want to send steem/sbd")
-        response= await client.wait_for_message(timeout=30,author=ctx.message.author)
-        res=str(response.clean_content)
-        old = await client.say("Hold on, sending and counting your new balances ")
-        stm = Steem(node="https://api.steemit.com", keys=[SR,SV])
-        account = Account(res, steem_instance=stm)
-        account.transfer(to, amount, asset_name, memo)
-        await asyncio.sleep(2)
-        acc = Account(res)
-        inf = acc.get_balances()
-        stm = inf['available'][0]
-        sbdd = inf['available'][1]
-        await client.delete_message(old)
-        await client.say(res + " has successfully transferred `" + str(amount) + " " + asset_name + "` to `" + to + "` with following memo: `" + memo + "`.\nNew Balance: " + str(stm) + " and " + str(sbdd))
+        await client.say("You are sending `"+str(amount)+" "+asset_name+"` to `"+to+"`.Should i process it?")
+        response1= await client.wait_for_message(timeout=30,author=ctx.message.author)
+        resp=str(response1.clean_content)
+        if resp.lower()=="yes":
+            await client.say("Type the username from which you want to send steem/sbd")
+            response2= await client.wait_for_message(timeout=30,author=ctx.message.author)
+            res=str(response2.clean_content)
+            old = await client.say("Hold on, sending and counting your new balances ")
+            stm = Steem(node="https://api.steemit.com", keys=[SR,SV])
+            account = Account(res, steem_instance=stm)
+            account.transfer(to, amount, asset_name, memo)
+            await asyncio.sleep(3)
+            acc = Account(res)
+            inf = acc.get_balances()
+            stm = inf['available'][0]
+            sbdd = inf['available'][1]
+            await client.delete_message(old)
+            await client.say(res + " has successfully transferred `" + str(amount) + " " + asset_name + "` to `" + to + "` with following memo: `" + memo + "`.\nNew Balance: " + str(stm) + " and " + str(sbdd))
+        else:
+            await client.say("Ok, pal! Canceling it for you. Try again) 
     else:
         await client.say("You can't use this feature")
 
