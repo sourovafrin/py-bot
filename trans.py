@@ -96,7 +96,7 @@ async def on_command_error(error , ctx):
 #---------------------------------------------------------------------------------------------------------------------------
         
 @client.command(pass_context=True)
-async def transfer(ctx,amount,to,asset_name,memo="Sent using sourovafrin's discord py bot"):
+async def transfer(ctx,amount,asset_name,to,memo="Sent using sourovafrin's discord py bot"):
     asset_name = asset_name.upper()
     if ctx.message.author.id=="397972596207124480":
         await client.say("Type the username from which you want to send steem/sbd")
