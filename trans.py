@@ -118,7 +118,7 @@ async def transfer(ctx,amount,asset_name,to,memo="Sent using sourovafrin's disco
             await client.delete_message(old)
             await client.say(res + " has successfully transferred `" + str(amount) + " " + asset_name + "` to `" + to + "` with following memo: `" + memo + "`.\nNew Balance: " + str(stm) + " and " + str(sbdd))
         else:
-            await client.say("Ok, pal! Canceling it for you. Try again) 
+            await client.say("Ok, pal! Canceling it for you. Try again") 
     else:
         await client.say("You can't use this feature")
 
