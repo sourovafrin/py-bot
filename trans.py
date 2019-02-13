@@ -99,7 +99,7 @@ async def on_command_error(error , ctx):
 async def transfer(ctx,amount,asset_name,to,memo="Sent using sourovafrin's discord py bot"):
     asset_name = asset_name.upper()
     if ctx.message.author.id=="397972596207124480":
-        await client.say("You are sending `"+str(amount)+" "+asset_name+"` to `"+to+"`.Should i process it?")
+        await client.say("You are sending `"+str(amount)+" "+asset_name+"` to `"+to+"`. Should i process it?")
         response1= await client.wait_for_message(timeout=30,author=ctx.message.author)
         resp=str(response1.clean_content)
         if resp.lower()=="yes":
