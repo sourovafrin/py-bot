@@ -40,15 +40,15 @@ async def vp(ctx, username):
         await client.say("**" + username + "'s** current voting power is **" + str(mana) + " %**")
         await asyncio.sleep(1)
         await client.say("Apu i am running out of food, please send fee to my master `sourovafrin` so that he could buy me some food")
-    else:   
-    try:
+    else:
+        try:
         account = Account(username)
         mana = account.get_manabar()
         mana = round(mana["current_mana_pct"], 2)
         await client.say("**" + username + "'s** current voting power is **" + str(mana) + " %**")
-    except Exception as exc:
-        await client.say("i digged hard the steem blockchain but couldn't find :`"+username+ "`\nThat must be a typo, try again")
-       
+        except Exception as exc:
+            await client.say("i digged hard the steem blockchain but couldn't find :`"+username+ "`\nThat must be a typo, try again")
+        
 @vp.error
 async def on_command_error(error , ctx):
     if isinstance(error, Exception,):
