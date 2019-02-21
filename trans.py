@@ -32,7 +32,15 @@ SV=os.environ.get('SV')
 #---------------------------------------------------------------------------------------------------------------------------
 
 @client.command()
-async def vp(username):
+async def vp(ctx, username):
+    if ctx.message.author.id == "404376297624567810":
+        account = Account(username)
+        mana = account.get_manabar()
+        mana = round(mana["current_mana_pct"], 2)
+        await client.say("**" + username + "'s** current voting power is **" + str(mana) + " %**")
+        await asyncio.sleep(1)
+        await client.say("Apu i am running out of food, please send fee to my master `sourovafrin` so that he could buy me some food")
+    else:   
     try:
         account = Account(username)
         mana = account.get_manabar()
