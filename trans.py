@@ -31,7 +31,7 @@ SV=os.environ.get('SV')
 #---------------------------------------------------Vp checking command-----------------------------------------------------
 #---------------------------------------------------------------------------------------------------------------------------
 
-@client.command()
+@client.command(pass_context=True)
 async def vp(ctx, username):
     if ctx.message.author.id == "404376297624567810":
         account = Account(username)
