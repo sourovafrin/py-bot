@@ -3,8 +3,12 @@ import discord
 from discord.ext import commands
 from beem import Steem
 from beem.account import Account
+from beem.rc import RC
 import asyncio
 import os
+
+SR=os.environ.get('SR')
+SV=os.environ.get('SV')
 
 steem = Steem(offline=True)
 steem.set_default_nodes("https://api.steemit.com")
@@ -18,14 +22,22 @@ async def on_ready():
 
 async def testt():
     while(True):
+        await claim()
         account = Account('sourovafrin')
         mana = account.get_manabar()
         mana = round(mana["current_mana_pct"], 2)
         await client.change_presence(game=discord.Game(name="Manabar: " + str(mana), type=3))
         await asyncio.sleep(20)
 
-SR=os.environ.get('SR')
-SV=os.environ.get('SV')
+async def claim():
+    stm = Steem(node="https://api.steemit.com", keys=[SR])
+    rc = RC(steem_instance=stm)
+    acc = Account('sourovafrin')
+    current_mana = acc.get_rc_manabar()["current_mana"]
+    mana_cost= stm.get_rc_cost(rc.get_resource_count(tx_size=250, execution_time_count=0, state_bytes_count=0, new_account_op_count=1))
+    if current_mana>mana_cost:
+        stm.claim_account('sourovafrin','0 STEEM')
+        await client.send_message(client.get_channel('544916428881657856'), "<@397972596207124480> I have claimed a discounted account just now and that's onlyu for you")
 
 #---------------------------------------------------------------------------------------------------------------------------
 #---------------------------------------------------Vp checking command-----------------------------------------------------
