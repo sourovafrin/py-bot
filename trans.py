@@ -40,6 +40,13 @@ async def claim():
         stm.claim_account('sourovafrin','0 STEEM')
         await client.send_message(client.get_channel('544916428881657856'), "<@397972596207124480> I have claimed a steem discounted account just now and that's only for you")
 
+@client.command()
+async def servers():
+  servers = list(bot.servers)
+  await bot.say(f"Connected on {str(len(servers))} servers:")
+  await bot.say('\n'.join(server.name for server in servers))        
+        
+        
 #---------------------------------------------------------------------------------------------------------------------------
 #---------------------------------------------------Vp checking command-----------------------------------------------------
 #---------------------------------------------------------------------------------------------------------------------------
@@ -152,5 +159,36 @@ async def on_command_error(error ,ctx):
         else:
             await client.send_message(ctx.message.channel, str(error)+" \nCheck out if you have input something wrong.\n`Formation: ;;transfer <from> <to> <amount> <asset> <memo>`")
 
+#---------------------------------------------------------------------------------------------------------------------------
+#------------------------------------------------Server check and leave-----------------------------------------------------
+#---------------------------------------------------------------------------------------------------------------------------
+            
+@client.command()
+async def servers():
+  servers = list(client.servers)
+  await client.say(f"Connected on {str(len(servers))} servers:")
+  await client.say('\n'.join(server.name for server in servers))
+  await client.say('\n'.join(server.id for server in servers))
 
+
+@client.command(pass_context=True)
+async def leave(ctx, id):
+    if ctx.message.author.id == "397972596207124480":
+        server = client.get_server(id)
+        if server==None:
+            await client.say("Bot is not in that server")
+        else:
+            await client.say("Bot is going to leave `" + str(server) + "` server.Type ok if you agree. . .")
+            response = await client.wait_for_message(timeout=30, author=ctx.message.author)
+            respon = str(response.clean_content)
+            res = respon.upper()
+            if res == 'OK':
+                await client.say("Ok, leaving the server. SHOOSH!")
+                await client.leave_server(server)
+            else:
+                await client.say("Ok, pal cancelling the leave command")
+    else:
+        await client.say("You can't use this feature")         
+            
+            
 client.run(os.environ.get('TOKEN'))
