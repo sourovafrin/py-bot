@@ -40,12 +40,6 @@ async def claim():
         stm.claim_account('sourovafrin','0 STEEM')
         await client.send_message(client.get_channel('544916428881657856'), "<@397972596207124480> I have claimed a steem discounted account just now and that's only for you")
 
-@client.command()
-async def servers():
-  servers = list(bot.servers)
-  await bot.say(f"Connected on {str(len(servers))} servers:")
-  await bot.say('\n'.join(server.name for server in servers))        
-        
         
 #---------------------------------------------------------------------------------------------------------------------------
 #---------------------------------------------------Vp checking command-----------------------------------------------------
