@@ -35,6 +35,7 @@ async def claim():
     acc = Account('sourovafrin')
     current_mana = acc.get_rc_manabar()["current_mana"]
     mana_cost= stm.get_rc_cost(rc.get_resource_count(tx_size=250, execution_time_count=0, state_bytes_count=0, new_account_op_count=1))
+    mana_cost+=2500000000
     if current_mana>mana_cost:
         stm.claim_account('sourovafrin','0 STEEM')
         await client.send_message(client.get_channel('544916428881657856'), "<@397972596207124480> I have claimed a steem discounted account just now and that's only for you")
