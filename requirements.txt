@@ -1,3 +1,4 @@
 discord.py==0.16.12
 beem==0.20.18
 requests==2.21.0
+schedule==0.6.0
