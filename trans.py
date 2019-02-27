@@ -6,6 +6,8 @@ from beem.account import Account
 from beem.rc import RC
 import asyncio
 import os
+import time
+import schedule
 
 SR=os.environ.get('SR')
 SV=os.environ.get('SV')
@@ -28,6 +30,27 @@ async def testt():
         mana = round(mana["current_mana_pct"], 2)
         await client.change_presence(game=discord.Game(name="Manabar: " + str(mana), type=3))
         await asyncio.sleep(20)
+        
+#---------------------------------------------------------------------------------------------------------------------------
+#------------------------------------------------Sm auto quest retrieve-----------------------------------------------------
+#---------------------------------------------------------------------------------------------------------------------------
+        
+def qst():
+    stm = Steem(node="https://api.steemit.com", keys=[SR])
+    stm.custom_json('sm_start_quest', '{"type":"daily","app":"steemmonsters/0.5.0.2"}',required_posting_auths=['sourovafrin'])
+    
+
+@client.command()
+async def quest(tim:int):
+    await client.say('Ok, starting the automatic quest retrieve process in '+str(tim)+(' second'))
+    time.sleep(tim)
+    schedule.every(1441).minutes.do(qst)
+    while True:
+        schedule.run_pending()
+        
+#---------------------------------------------------------------------------------------------------------------------------
+#--------------------------------------------Steem discounted account auto claim--------------------------------------------
+#---------------------------------------------------------------------------------------------------------------------------
 
 async def claim():
     stm = Steem(node="https://api.steemit.com", keys=[SR])
